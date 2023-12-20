@@ -38,19 +38,44 @@ const Properties = ({ searchFilter }) => {
       console.log(searchFilter);
 
       let filteredData = allProperties.filter((item) => {
-        // console.log(parseInt(item.rent), parseInt(searchFilter.price));
         // console.log(
-        //   new Date(item.availableFrom).getTime(),
-        //   new Date(searchFilter.availableFrom).getTime()
+        //   searchFilter.city.toLowerCase() == ""
+        //     ? item.address.city.toLowerCase()
+        //     : searchFilter.city.toLowerCase()
+        // );
+        // console.log(
+        //   searchFilter.price == ""
+        //     ? parseInt(item.rent)
+        //     : parseInt(searchFilter.price)
+        // );
+        // console.log(
+        //   searchFilter.availableFrom == ""
+        //     ? new Date(item.availableFrom).getTime()
+        //     : new Date(searchFilter.availableFrom).getTime()
+        // );
+        // console.log(
+        //   searchFilter.propertyType.toLowerCase() == ""
+        //     ? item.propertyType.toLowerCase()
+        //     : searchFilter.propertyType.toLowerCase()
         // );
 
         return (
-          item.address.city.toLowerCase() === searchFilter.city.toLowerCase() ||
-          parseInt(item.rent) >= parseInt(searchFilter.price) ||
+          item.address.city.toLowerCase() ===
+            (searchFilter.city.toLowerCase() == ""
+              ? item.address.city.toLowerCase()
+              : searchFilter.city.toLowerCase()) &&
+          parseInt(item.rent) <=
+            (searchFilter.price == ""
+              ? parseInt(item.rent)
+              : parseInt(searchFilter.price)) &&
           new Date(item.availableFrom).getTime() <=
-            new Date(searchFilter.availableFrom).getTime() ||
+            (searchFilter.availableFrom == ""
+              ? new Date(item.availableFrom).getTime()
+              : new Date(searchFilter.availableFrom).getTime()) &&
           item.propertyType.toLowerCase() ===
-            searchFilter.propertyType.toLowerCase()
+            (searchFilter.propertyType.toLowerCase() == ""
+              ? item.propertyType.toLowerCase()
+              : searchFilter.propertyType.toLowerCase())
         );
       });
       console.log("FilteredData", filteredData);
